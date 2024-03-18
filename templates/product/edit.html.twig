@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edition Product{% endblock %}
+
+{% block body %}
+    <h1>edition  Product</h1>
+
+    {{ form_start(form) }}
+        {{ form_row(form.name) }}
+        {{ form_row(form.descriptopn) }}
+        {{ form_row(form.price) }}
+        {{ form_row(form.imageUrl) }}
+        <button class="btn btn-success">Create</button>
+    {{ form_end(form) }}
+
+    <a href="{{ path('app_home') }}">Back to list</a>
+{% endblock %}

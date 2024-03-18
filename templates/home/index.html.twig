@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello HomeController!{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="example-wrapper">
+    <h1>Welcome to our Home Page! ✅</h1>
+
+    {% if products|length > 0 %}
+        <h2>Our Products</h2>
+        <a href="{{ path('new_product') }}" class="btn btn-danger">Ajouter</a>
+        <ul>
+            {% for product in products %}
+                <li>
+                    {{ product.name }} - {{ product.price }}€
+                    <img width="200" height="200" src="{{ product.imageUrl }}" alt="Image de {{ product.name }}" />
+                    
+                    {# Edtition #}
+                    <a href="{{ path('product_edit', {'id': product.id}) }}" class="btn btn-danger">Modifier</a>
+                    
+                    {# Suppression #}
+                    <form action="{{ path('product_delete', {'id': product.id}) }}" method="post" onsubmit="return confirm('Voulez vous vraiment le supprimer ?');">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ product.id) }}">
+                        <button type="submit" class="btn btn-danger">Supprimer</button>
+                    </form>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Aucun produit trouvé.</p>
+    {% endif %}
+</div>
+{% endblock %}
